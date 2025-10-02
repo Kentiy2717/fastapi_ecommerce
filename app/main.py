@@ -1,6 +1,15 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from routers import categories, prooducts
+
+
+app = FastAPI(
+    title='Интернет-магазин "MyLavka"',
+    version='0.1.0',
+)
+
+app.include_router(categories.router)
+app.include_router(prooducts.router)
 
 
 @app.get('/')
