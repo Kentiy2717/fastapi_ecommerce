@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 from sqlalchemy import ForeignKey, String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
-from app.models.products import Product
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from app.models.products import Product
 
 
 class Category(Base):
@@ -18,11 +23,11 @@ class Category(Base):
         cascade='all, delete-orphan'
     )
 
-    parent: Mapped['Category' | None] = relationship(
+    parent: Mapped[Category | None] = relationship(
         back_populates='children',
         remote_side="Category.id"
     )
-    children: Mapped[list['Category']] = relationship(
+    children: Mapped[list[Category]] = relationship(
         back_populates='parent',
         cascade='all, delete-orphan'
     )
